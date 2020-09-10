@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'dagger.hilt.android.plugin'
+
+android {
+    compileSdkVersion Releases.compileSdkVersion
+
+    defaultConfig {
+        applicationId ApplicationId.applicationId
+        minSdkVersion Releases.minSdkVersion
+        targetSdkVersion Releases.targetSdkVersion
+        versionCode Releases.versionCode
+        versionName Releases.versionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BASE_URL", baseUrl
+        buildConfigField "String", "API_KEY", apiKey
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation Android.kotlin
+    implementation Android.appCompat
+    implementation Android.ktx
+    implementation Android.constraintLayout
+    implementation Android.design
+    implementation Android.recyclerView
+    implementation Android.fragmentKtx
+
+    implementation Jetpack.paging
+
+    implementation Network.retrofit
+    implementation Network.gsonConverter
+    implementation Network.okHttpLogging
+
+    implementation Glide.glide
+    implementation Glide.glidePallete
+
+    implementation DI.daggerHilt
+    kapt DI.daggerHiltCompiler
+    implementation DI.hiltViewModel
+    kapt DI.hiltCompiler
+
+    implementation Coroutines.core
+    implementation Coroutines.android
+
+    implementation Navigation.cicerone
+
+    testImplementation Testing.jUnit
+    androidTestImplementation Testing.extJunit
+    androidTestImplementation Testing.espresso
+
+}
